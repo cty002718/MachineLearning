@@ -48,11 +48,11 @@ init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
 
-for i in range(10000):
+for i in range(30000):
 	sess.run(train_step,feed_dict={x:train_data[:,2:],y:train_data[:,0:1]})
-	#if i % 100 == 0:
-		#print(sess.run(loss, feed_dict={x:train_data[:,2:],y:train_data[:,0:1]}))
-		#print(sess.run(ans, feed_dict={x:train_data[:,2:],y:train_data[:,0:1]}))
+	if i % 100 == 0:
+        #print(sess.run(loss, feed_dict={x:train_data[:,2:],y:train_data[:,0:1]}))
+		print(sess.run(wrong, feed_dict={x:train_data[:,2:],y:train_data[:,0:1]}))
 
 df_test = pd.read_csv('test.csv')
 
@@ -69,7 +69,7 @@ test_data = df_test.values
 
 output = sess.run(predict,feed_dict={x:test_data[:,1:]})
 output = np.squeeze(output)
-print(output)
+#print(output)
 #print(result)
 
 result = np.c_[test_data[:,0].astype(int), output.astype(int)]
